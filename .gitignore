@@ -1,0 +1,12 @@
+*.DS_Store
+*.zip
+ENV
+
+*.py[oc]
+/proto_smart_image_cropper/node_modules
+/proto_upload_image/node_modules
+/publishPage/node_modules
+/publishPage/cards
+/test_arora_connection/node_modules
+/HTMLParser/node_modules
+/HTMLParser/dist/node_modules

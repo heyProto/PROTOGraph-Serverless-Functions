@@ -1,0 +1,12 @@
+{
+  "js": "https://s3.ap-south-1.amazonaws.com/dev.cdn.protograph/cards/ProtoGraph.Card.toSocial/dist/0.0.1/card.min.js",
+  "css": "https://s3.ap-south-1.amazonaws.com/dev.cdn.protograph/cards/ProtoGraph.Card.toSocial/dist/0.0.1/card.min.css",
+  "data_url": "https://s3.ap-south-1.amazonaws.com/dev.cdn.protograph/Schemas/toSocial/0.0.1/sample.json",
+  "schema_json": "https://s3.ap-south-1.amazonaws.com/dev.cdn.protograph/Schemas/toSocial/0.0.1/schema.json",
+  "configuration_url": "",
+  "configuration_schema": "",
+  "initializer": "ProtoGraph.Card.toSocial",
+  "key": "Previews/13.png",
+  "mode": "screenshot",
+  "bucket": "test.ss"
+}

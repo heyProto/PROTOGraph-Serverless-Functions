@@ -1,0 +1,4 @@
+{
+  "body-json": "{\n    \"json_data\":\"{\\r\\n  \\\"root\\\": {\\r\\n    \\\"row\\\": [\\r\\n      {\\r\\n        \\\"prism\\\": \\\"Gender\\\",\\r\\n        \\\"section\\\": \\\"Education\\\"\\r\\n      },\\r\\n      {\\r\\n        \\\"prism\\\": \\\"Gender\\\",\\r\\n        \\\"section\\\": \\\"Education\\\"\\r\\n      }\\r\\n    ]\\r\\n  }\\r\\n}\",\n    \"json_schema_url\":\"https://s3.ap-south-1.amazonaws.com/haiku.dev/Json_Schema/Json_schema.json\"\n}",
+  "bucket-name": "haiku.dev"
+}

@@ -1,0 +1,8 @@
+{
+  "schema_url": $input.json('$.schema_url'),
+  "api_slug": $input.json('$.api_slug'),
+  "source": $input.json('$.source'),
+  "bucket": "$stageVariables.bucket",
+  "elasticsearch_metadata": $input.json('$.elasticsearch_metadata')
+  "elasticsearch_data": $input.json('$.elasticsearch_data')
+}

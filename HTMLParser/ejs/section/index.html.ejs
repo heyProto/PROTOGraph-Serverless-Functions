@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <% if (site.gtm_id) { %>
+            <!-- Google Tag Manager -->
+            <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer',"<%= site.gtm_id %>");</script>
+            <!-- End Google Tag Manager -->
+        <% } %>
+        <meta charset="UTF-8">
+        <title><%= page.headline %> | <%= site.seo_name %></title>
+        <link href="https://fonts.googleapis.com/css?family=Bitter:400,700|Cabin:400,400i,500,700" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="<%= AWS_S3_ENDPOINT %>/lib/proto-app-lib.min.css">
+        <link rel="stylesheet" type="text/css" href="<%= AWS_S3_ENDPOINT %>/lib/proto-app-style.min.css">
+        <link rel="stylesheet" type="text/css" href="<%= AWS_S3_ENDPOINT %>/<%= template_page_s3 %>/proto-app-cover.min.css">
+        <link rel="stylesheet" type="text/css" href="<%= AWS_S3_ENDPOINT %>/lib/proto-app-fonts.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <% if (site.favicon_url) { %>
+            <link rel="icon" type="image/png" href="<%= site['favicon_url'] %>" />
+        <% } %>
+        <% if (page.meta_keywords) { %>
+            <meta name="keywords" content="<%= page.meta_keywords %>" />
+        <% } %>
+        <!-- Facebook Meta Tags -->
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="<%= page.html_key %>">
+        <meta property="og:site_name" content="<%= site.seo_name %>">
+        <meta property="og:title" content="<%= page.headline %>">
+        <meta property="og:updated_time" content="<%= page.published_at %>">
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:site" content="<%= site.seo_name %>">
+        <meta name="twitter:url" content="<%= page.html_key %>">
+        <meta name="twitter:title" content="<%= page.headline %>">
+        <% if (page.meta_description) { %>
+            <meta name="description" content="<%= page.meta_description %>" />
+            <meta property="og:description" content="<%= page.meta_description %>">
+            <meta name="twitter:description" content="<%= page.meta_description %>">
+        <% } %>
+        <% if (page.cover_image_url) { %>
+            <meta property="og:image" content="<%= page.cover_image_url %>">
+            <meta name="twitter:image" content="<%= page.cover_image_url %>">
+        <% } %>
+        <style>
+            .proto-mobile-grid-navigatio-tab.proto-active-tab {
+                color: <%- site.house_colour %>;
+                border-bottom: 2px solid <%- site.house_colour %>;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="<%= AWS_S3_ENDPOINT %>/lib/systemtheme.css">
+        <link rel="stylesheet" type="text/css" href="<%= AWS_S3_ENDPOINT %>/lib/theme.css">
+        <link rel="stylesheet" type="text/css" href="<%= AWS_S3_ENDPOINT %>/lib/layout.css">
+        <script>var newOpera = (navigator.userAgent.match(/Opera|OPR\//) ? true : false);if(window.newOpera){ $('body').addClass('operaBody'); }</script>
+
+        <% let list_of_cards = Object.keys(ssr_card_code); %>
+
+        <% list_of_cards.forEach(e => { %>
+            <link rel="stylesheet" type="text/css" href="<%= AWS_S3_ENDPOINT %>/<%= e %>/card.min.css">
+        <% }) -%>
+
+        <% if (site.is_ad_enabled) { %>
+            <script src='https://www.googletagservices.com/tag/js/gpt.js' ></script>
+            <script>
+                var googletag = googletag || {};
+                googletag.cmd = googletag.cmd || [];
+                googletag.cmd.push(function() {
+                    <% page.ad_integrations.forEach(function(e) { %>
+                        googletag.defineSlot( "<%= e.slot_text %>", [<%= e.width %>, <%= e.height %>], "<%= e.div_id %>").addService(googletag.pubads());
+                    <% }) %>
+                    googletag.pubads().collapseEmptyDivs();
+                    googletag.enableServices();
+                });
+            </script>
+        <% } %>
+    </head>
+
+    <% let language = site.primary_language.toLowerCase(); -%>
+    <% let body_class = language !== 'english' ? `language-${language}` : "proto-app-body"; -%>
+    <% let site_name = site.name ? `By ${site.name}` : ""; -%>
+    <% let ssr_cards = {}; -%>
+
+    <body class="<%= body_class %>">
+        <% if (site.comscore_code) { %>
+            <script>
+                var _comscore = _comscore || [];_comscore.push({ c1: "2", c2: "<%= site.comscore_code %>" }); (function() {var s = document.createElement("script"), el = document.getElementsByTagName("script")[0];s.async = true;s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b")+ ".scorecardresearch.com/beacon.js"; el.parentNode.insertBefore(s, el); })();
+            </script>
+        <% } %>
+        <style>
+            body {
+                overflow: auto;
+            }
+        </style>
+
+        <div class="proto-app-navbar-masthead" id="site_header">
+            <div class="proto-app-navbar-proto-container">
+                <div class="proto-app-navbar-site-logo proto-app-navbar-position-left"></div>
+                <div class="proto-app-navbar-menu-icon">
+                    MENU
+                    <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/menu-icon.png" />
+                </div>
+            </div>
+        </div>
+        <div class="proto-app-navbar-proto-container">
+            <div id="proto_app_header">
+                <div class="proto-app-navbar">
+                    <div class="proto-app-navbar-logo-holder">
+                        <h1 class="proto-app-navbar-project-name" id="homepage_nav">
+                            <%- ref_category_object['name_html'] -%>
+                        </h1>
+                        <div class="proto-app-navbar-project-by"><%- site_name -%></div>
+                        <div class="proto-app-navbar-first-navigation">
+                            <span></span>
+                            <div class="fade-effect"></div>
+                            <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/arrow-right.png" />
+                        </div>
+                    </div>
+                    <div class="proto-app-navbar-logo">
+                        <a href="https://pro.to" target="_blank">
+                            <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/proto-color-logo.png" class="colored-logo" height="29px" width="26px" />
+                            <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/proto-grey-logo.png" class="grey-logo" height="29px" width="26px" />
+                        </a>
+                    </div>
+                    <div class="proto-app-navbar-navigation-bar">
+                        <div class="proto-app-navbar-left-click-arrow" id="proto-navbar-prev">
+                            <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/arrow-left.png" />
+                        </div>
+                        <div class="proto-app-navbar-page-navigation">
+                            <div class="proto-app-navbar-overlay">
+                                <div class="proto-app-navbar-navigation-scroll" id="vertical_nav"></div>
+                            </div>
+                        </div>
+                        <div class="proto-app-navbar-right-click-arrow" id="proto-navbar-next">
+                            <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/arrow-right.png" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pro-container">
+            <div class="pro-col pro-col-16 stick-to-top">
+                <div class="pro-row pro-row-5">
+                    <div id='cover_container'>
+                        <% ssr_cards['16c_Hero'] = []; -%>
+                        <% streams_mapping['16c_Hero'].cards.forEach(function(card,i) { %>
+                            <% if (ssr_card_code[card.s3_identifier]) { %>
+                                <% let cardContent = ssr_card_code[card.s3_identifier].render("col16", {"dataJSON": card.data_json}) -%>
+                                <% ssr_cards['16c_Hero'].push({
+                                    instance: ssr_card_code[card.s3_identifier].instance,
+                                    view_cast_id: card.view_cast_id,
+                                    datacast_identifier: card.datacast_identifier,
+                                    dataJSON: {"dataJSON": card.data_json}
+                                }); -%>
+                                <div id="proto_<%= card.view_cast_id %>" data-ssr="true">
+                                    <%- cardContent.content -%>
+                                </div>
+                                <div style='margin-bottom: 20px'></div>
+                            <% } else { %>
+                                <div id="proto_<%= card.view_cast_id %>" data-ssr="false" data-view_cast_id="<%= card.datacast_identifier %>" data-template_card_id="<%= card.s3_identifier %>">
+                                    <%- card.seo_blockquote %>
+                                </div>
+                                <div style='margin-bottom: 20px'></div>
+                            <% } %>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+            <div class="pro-col pro-col-16 proto-nav-sticky">
+                <div class="theiaStickySidebar">
+                    <div class="proto-mobile-grid-navigation">
+                        <div class="proto-mobile-grid-navigatio-tab proto-active-tab"><%= streams_mapping['7c']['name_of_stream'] %></div>
+                        <div class="proto-mobile-grid-navigatio-tab"><%= streams_mapping['4c']['name_of_stream'] %></div>
+                        <div class="proto-mobile-grid-navigatio-tab"><%= streams_mapping['2c']['name_of_stream'] %></div>
+                        <div class="proto-mobile-grid-navigatio-tab"><%= streams_mapping['3c']['name_of_stream'] %></div>
+                    </div>
+                </div>
+            </div>
+            <div id="cover" class="pro-col pro-col-16 cover-page-overlay no-right-column">
+                <div class="pro-col pro-col-7 proto-tab-content proto-tab-active-content">
+                    <div class="column-title"><%= streams_mapping['7c']['name_of_stream'] %></div>
+                    <div id="originals_container" class="pro-row pro-row-3 sidebar">
+                         <div class="theiaStickySidebar">
+                            <% ssr_cards['7c'] = []; -%>
+                            <% streams_mapping['7c'].cards.forEach(function(card,i) { %>
+                                <% if (ssr_card_code[card.s3_identifier]) { %>
+                                    <% let cardContent = ssr_card_code[card.s3_identifier].render("col7", {"dataJSON": card.data_json}) %>
+                                    <% ssr_cards['7c'].push({
+                                        instance: ssr_card_code[card.s3_identifier].instance,
+                                        view_cast_id: card.view_cast_id,
+                                        datacast_identifier: card.datacast_identifier,
+                                        dataJSON: {"dataJSON": card.data_json}
+                                    }); -%>
+                                    <div id="proto_<%= card.view_cast_id %>" data-ssr="true">
+                                        <%- cardContent.content %>
+                                    </div>
+                                    <div style='margin-bottom: 20px'></div>
+                                <% } else { %>
+                                    <div id="proto_<%= card.view_cast_id %>" data-ssr="false" data-view_cast_id="<%= card.datacast_identifier %>"
+                                    data-template_card_id="<%= card.s3_identifier %>" class="ProtoCard-originals">
+                                        <%- card.seo_blockquote %>
+                                    </div>
+                                    <div style='margin-bottom: 20px'></div>
+                                <% } %>
+                            <% }); %>
+                         </div>
+                    </div>
+                </div>
+                <div class="pro-col pro-col-4 proto-tab-content">
+                    <div class="column-title"><%= streams_mapping['4c']['name_of_stream'] %></div>
+                    <div id="digests_container" class="pro-row pro-row-3 sidebar">
+                        <div class="theiaStickySidebar">
+                            <% ssr_cards['4c'] = []; -%>
+                            <% streams_mapping['4c'].cards.forEach(function(card,i) { %>
+                                <% if (ssr_card_code[card.s3_identifier]) { %>
+                                    <% let cardContent = ssr_card_code[card.s3_identifier].render("col4", {"dataJSON": card.data_json}) %>
+                                    <% ssr_cards['4c'].push({
+                                        instance: ssr_card_code[card.s3_identifier].instance,
+                                        view_cast_id: card.view_cast_id,
+                                        datacast_identifier: card.datacast_identifier,
+                                        dataJSON: {"dataJSON": card.data_json}
+                                    }); -%>
+                                    <div id="proto_<%= card.view_cast_id %>" data-ssr="true">
+                                        <%- cardContent.content %>
+                                    </div>
+                                    <div style='margin-bottom: 20px'></div>
+                                <% } else { %>
+                                    <div id="proto_<%= card.view_cast_id %>" data-ssr="false" data-view_cast_id="<%= card.datacast_identifier %>"
+                                    data-template_card_id="<%= card.s3_identifier %>"  class="ProtoCard-digests">
+                                        <%- card.seo_blockquote %>
+                                    </div>
+                                    <div style='margin-bottom: 20px'></div>
+                                <% } %>
+                            <% }); %>
+                        </div>
+                    </div>
+                </div>
+                <div class="pro-col pro-col-2 proto-tab-content">
+                    <div class="column-title"><%= streams_mapping['2c']['name_of_stream'] %></div>
+                    <div id='opinions_container' class="pro-row pro-row-3 sidebar">
+                        <div class="theiaStickySidebar">
+                            <% ssr_cards['2c'] = []; -%>
+                            <% streams_mapping['2c'].cards.forEach(function(card,i) { %>
+                            <% if (ssr_card_code[card.s3_identifier]) { %>
+                                    <% let cardContent = ssr_card_code[card.s3_identifier].render("col2", {"dataJSON": card.data_json}) -%>
+                                    <% ssr_cards['2c'].push({
+                                        instance: ssr_card_code[card.s3_identifier].instance,
+                                        view_cast_id: card.view_cast_id,
+                                        datacast_identifier: card.datacast_identifier,
+                                        dataJSON: {"dataJSON": card.data_json}
+                                    }); -%>
+                                    <div id="proto_<%= card.view_cast_id %>" data-ssr="true">
+                                        <%- cardContent.content %>
+                                    </div>
+                                    <div style='margin-bottom: 20px'></div>
+                                <% } else { %>
+                                    <div id="proto_<%= card.view_cast_id %>" data-ssr="false" data-view_cast_id="<%= card.datacast_identifier %>" data-template_card_id="<%= card.s3_identifier %>" class="ProtoCard-opinions">
+                                        <%- card.seo_blockquote %>
+                                    </div>
+                                    <div style='margin-bottom: 20px'></div>
+                                <% } %>
+                            <% }); %>
+                        </div>
+                    </div>
+                </div>
+                <div class="pro-col pro-col-3 proto-tab-content no-right-margin">
+                    <div class="column-title"><%= streams_mapping['3c']['name_of_stream'] %></div>
+                    <div id='feeds_container' class="pro-row pro-row-3 sidebar">
+                        <div class="theiaStickySidebar">
+                            <% ssr_cards['3c'] = []; -%>
+                            <% streams_mapping['3c'].cards.forEach(function(card,i) { %>
+                                <% if (ssr_card_code[card.s3_identifier]) { %>
+                                    <% let cardContent = ssr_card_code[card.s3_identifier].render("col3", {"dataJSON": card.data_json}) %>
+                                    <% ssr_cards['3c'].push({
+                                        instance: ssr_card_code[card.s3_identifier].instance,
+                                        view_cast_id: card.view_cast_id,
+                                        datacast_identifier: card.datacast_identifier,
+                                        dataJSON: {"dataJSON": card.data_json}
+                                    }); -%>
+                                    <div id="proto_<%= card.view_cast_id %>" data-ssr="true">
+                                        <%- cardContent.content %>
+                                    </div>
+                                    <div style='margin-bottom: 20px'></div>
+                                <% } else { %>
+                                    <div id="proto_<%= card.view_cast_id %>" data-ssr="false" data-view_cast_id="<%= card.datacast_identifier %>" data-template_card_id="<%= card.s3_identifier %>" class="ProtoCard-feeds">
+                                        <%- card.seo_blockquote %>
+                                    </div>
+                                    <div style='margin-bottom: 20px'></div>
+                                <% } %>
+                            <% }); %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pro-col pro-col-16">
+                <div class="col-16-story-card-credits">
+                    <div id='credits_container'>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="proto-footer">
+            <div class="footer-content-area">
+                <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/arrow-left.png" class="left-arrow" id="proto-footer-prev">
+                <div class="links-area">
+                    <div class="links-scroll-area" id='vertical_footer'>
+                    </div>
+                </div>
+                <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/arrow-right.png" class="right-arrow" id='proto-footer-next'>
+                <div class="privacy-details">
+                    <span class="footer-link light-link">Powered by Proto</span>
+                    <span class="light-link dot-seprater">&#8231;</span>
+                    <span class="footer-link light-link">Terms</span>
+                    <span class="light-link dot-seprater">&#8231;</span>
+                    <span class="footer-link light-link">Privacy</span>
+                </div>
+            </div>
+        </div>
+        <div class="proto-app-scroll-to-top" title="Scroll to top">
+            <i class="angle up icon"></i>
+        </div>
+        <% list_of_cards.forEach(e => { %>
+            <script src="<%= AWS_S3_ENDPOINT %>/<%= e %>/card.min.js" defer></script>
+        <% }) -%>
+        <script>
+            window.ProtoGraph = window.ProtoGraph || {};
+            ProtoGraph.site = <%- JSON.stringify(site) %>
+            ProtoGraph.ref_category_object = <%- JSON.stringify(ref_category_object) %>;
+            ProtoGraph.vertical_header_json_url = "<%- vertical_header_json_url %>";
+            ProtoGraph.homepage_header_json_url = "<%- homepage_header_json_url %>";
+            ProtoGraph.site_header_json_url = "<%- site_header_json_url %>";
+            ProtoGraph.ssr_cards = <%- JSON.stringify(ssr_cards) %>;
+        </script>
+        <script src="<%= AWS_S3_ENDPOINT %>/lib/protoGraph.min.js" defer></script>
+        <script src="<%= AWS_S3_ENDPOINT %>/lib/proto-app-lib.min.js" defer></script>
+        <script src="<%= AWS_S3_ENDPOINT %>/lib/proto-app-init.min.js" defer></script>
+        <script src="<%= AWS_S3_ENDPOINT %>/<%= template_page_s3 %>/proto-app-cover.min.js" defer></script>
+        <% if (site.ga_code) { %>
+            <!-- Global Site Tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=<%= site.ga_code %>"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', '<%= site.ga_code %>');
+            </script>
+        <% } %>
+    </body>
+</html>

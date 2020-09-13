@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "JsonValidationModel",
+  "type": "object",
+  "required": ["root"],
+  "properties": {
+    "root": { 
+        "type": "object",
+        "required": ["row"],
+        "properties": {
+            "row": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "prism": { "type": "string" },
+                        "section": { "type": "string" }
+                    }
+                }
+        
+            }   
+        }    
+    } 
+  }
+}

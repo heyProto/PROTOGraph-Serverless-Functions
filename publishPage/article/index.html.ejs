@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title><%= page.headline %></title>
+        <link href="https://fonts.googleapis.com/css?family=Bitter:400,700|Cabin:400,400i,500,700" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://cdn.protograph.pykih.com/lib/proto-app-lib.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.protograph.pykih.com/lib/proto-app-style.min.css">
+        <link rel="stylesheet" type="text/css" href="<%= AWS_S3_ENDPOINT %>/<%= template_page_s3 %>/proto-app-findings.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.protograph.pykih.com/lib/proto-app-fonts.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <script src="https://cdn.protograph.pykih.com/lib/protoGraph.min.js"></script>
+        <% if (site.favicon_url) { %>
+            <link rel="icon" type="image/png" href="<%= site['favicon_url'] %>" />
+        <% } %>
+        <% if (page.meta_keywords) { %>
+            <meta name="keywords" content="<%= page.meta_keywords %>" />
+        <% } %>
+        <% if (page.meta_description) { %>
+            <meta name="description" content="<%= page.meta_description %>" />
+        <% } %>
+        <style>
+            .explainers-sticky-segment-question:hover{
+                border-left: 3px solid <%- site.house_colour %>;
+            }
+            .band_color {
+                border-left: 3px solid <%- site.house_colour %>;
+            }
+            .single-index-value.active{
+                border-left: 2px solid <%- site.house_colour %>;
+                color: <%- site.house_colour %>;
+            }
+            .article-share-icons{
+                background: <%- site.house_colour %>;
+            }
+            .single-tab-value.active-value{
+                border-bottom: 2px solid <%- site.house_colour %>;
+                color: <%- site.house_colour %>;
+            }
+        </style>
+    </head>
+
+    <% let language = site.primary_language.toLowerCase(); %>
+    <% let body_class = language !== 'english' ? `language-${language}` : "proto-app-body"; %>
+
+    <body class="<%= body_class %>">
+        <div class="proto-grid-container data-page">
+
+            <div class="client-brand-cover small-cover" id="site_header">
+                <div class="client-logo"></div>
+            </div>
+            <div class="proto-col col-16 proto-verticals-navbar">
+                <div class="proto-vertical-name" id="homepage_nav">
+                    <h1 class="navbar-project-title"><%- ref_category_object['name_html'] %></h1>
+                    <i class="chevron down icon proto-hide"></i>
+                </div>
+                <div class="page-navigation-options" id="vertical_nav"></div>
+                <div class="pnav-options single-pnav-option" id="homepage_nav_list"></div>
+                <div class="social right-float-div">
+                    <% if (site.facebook_url) { %>
+                        <div class="single-link facebook">
+                            <a href="<%= site['facebook_url'] %>" target="_blank">
+                                <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/fb-white.png">
+                            </a>
+                        </div>
+                    <% } %>
+                    <% if (site.twitter_url) { %>
+                        <div class="single-link twitter">
+                            <a href="<%= site['twitter_url'] %>" target="_blank">
+                                <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/tw-white.png">
+                            </a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class="mobile-navigation">
+                <div class="mobile-navbar">
+                    <div class="branding">
+                        <h1 class="navbar-project-title"><%- ref_category_object['name_html'] %></h1>
+                        <i class="chevron down icon proto-hide"></i>
+                    </div>
+                    <div class="right-float-div">
+                        <div class="hamburger-icon"><img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/hamburger-icon.png"></div>
+                    </div>
+                    <div class="pnav-options single-pnav-option" id="mobile_homepage_nav_list"></div>
+                </div>
+
+                <div class="mobile-navigations-screen">
+                    <div class="right-float-div">
+                        <div class="close-icon"><i class="remove icon"></i></div>
+                    </div>
+                    <div class="nav-links"></div>
+                    <div class="social bottom-pull-div">
+                        <% if (site.facebook_url) { %>
+                            <div class="single-link facebook">
+                                <a href="<%= site['facebook_url'] %>" target="_blank">
+                                    <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/fb-black.png">
+                                </a>
+                            </div>
+                        <% } %>
+                        <% if (site.twitter_url) { %>
+                            <div class="single-link twitter">
+                                <a href="<%= site['twitter_url'] %>" target="_blank">
+                                    <img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/tw-black.png">
+                                </a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="proto-col col-16" id="col_16_cover_container"></div>
+            <div class="proto-col col-4 navigation-links">
+                <div class="summary">
+                    <div class="article-share-icons">
+                        <div class="article-share-icons">
+                            <a href="#" id='facebook-share-link' target="_blank">
+                                <div class="single-share-icon"><img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/article-share-facebook.png"></div>
+                            </a>
+                            <a href="#" id='twitter-share-link' target="_blank">
+                                <div class="single-share-icon"><img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/article-share-twitter.png"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-index" id="sticker">
+                    <% if (navigation_json && navigation_json.length) { %>
+                        <div class="index-title-tabs">
+                            <div class="single-tab-value active-value">OVERVIEW</div>
+                        </div>
+                        <nav class="scroll_navigation" id="myNavbar">
+                            <ul class="nav index-list">
+                                <% navigation_json.forEach(function(item, i) { %>
+                                    <% if (item['section'].length) { %>
+                                        <li class="nav-item">
+                                            <a href="#<%= item['view_cast_identifier'] %>" class="nav-link single-index-value <%= (i === 0) ? 'active' : '' %>">
+                                                <%= item['section'] %>
+                                            </a>
+                                        </li>
+                                    <% } %>
+                                <% }); %>
+                            </ul>
+                        </nav>
+                    <% } %>
+                </div>
+            </div>
+            <div class="proto-col col-7">
+                <div class="article-area-small" id="article">
+                    <div class="fade-area"></div>
+                    <div></div>
+                    <% major_stream_blockquotes[streams_mapping['Narrative'].title].forEach(function(e) { %>
+                        <div id="ProtoGraph-article<%= e[0]%>">
+                            <%= e[1] %>
+                        </div>
+                        <div style='margin-bottom: 20px'></div>
+                    <% } %>
+                </div>
+                <div class="default-button read-more-button" id="cont-button">
+                    Continue Reading
+                </div>
+            </div>
+            <div class="proto-col col-4 col-1-offset">
+                <div class="related-articles-link">
+                    <div class="column-title"><%= streams_mapping['Related'].name_of_stream %></div>
+                    <div id="related_container"></div>
+                </div>
+            </div>
+            <% if (streams_mapping['7c']) { %>
+                <div class="proto-col col-16 more-articles-link-div">
+                    <div class="more-articles-link">
+                        <div class="column-title"><%= streams_mapping['7c'].name_of_stream %></div>
+                        <div id="more_articles_container" class="more-articles-container"></div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        <div class="protograph-app-filter-icon" id="protograph_filter_icon">&#9776;</div>
+        <div class="protograph-app-filter-icon protograph-app-filter-close-button" id="protograph_filter_close_icon"><i class="remove icon"></i></div>
+        <div class="proto-app-scroll-to-top" title="Scroll to top">
+            <i class="angle up icon"></i>
+        </div>
+        <% let page_object = {}; %>
+        <% ["headline", "cover_image_url", "cover_image_url_7_column"].forEach(function(e){ %>
+            <% page_object[e] = page[e]; %>
+        <% }); %>
+        <script>
+            window.ProtoGraph = window.ProtoGraph || {};
+            ProtoGraph.streams = <%- JSON.stringify(streams_mapping) %>;
+            ProtoGraph.ref_category_object = <%- JSON.stringify(ref_category_object) %>;
+            ProtoGraph.page = <%- JSON.stringify(page_object) %>;
+            ProtoGraph.vertical_header_json_url = "<%- vertical_header_json_url %>";
+            ProtoGraph.homepage_header_json_url = "<%- homepage_header_json_url %>";
+            ProtoGraph.site_header_json_url = "<%- site_header_json_url %>";
+        </script>
+        <script src="https://cdn.protograph.pykih.com/lib/proto-app-init.min.js"></script>
+        <script type="text/javascript" src="https://cdn.protograph.pykih.com/lib/proto-app-lib.min.js"></script>
+        <script src="https://cdn.protograph.pykih.com/lib/tether.min.js"></script>
+        <script src="https://cdn.protograph.pykih.com/lib/bootstrap.min.js"></script>
+        <script src="https://cdn.protograph.pykih.com/lib/protoGraph.min.js"></script>
+        <script type="text/javascript" src="<%= AWS_S3_ENDPOINT %>/<%= template_page_s3 %>/proto-app-findings.min.js"></script>
+        <% if (site.ga_code) { %>
+            <!-- Global Site Tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=<%= site.ga_code %>"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', '<%= site.ga_code %>');
+            </script>
+        <% } %>
+    </body>
+
+</html>

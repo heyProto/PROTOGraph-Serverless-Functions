@@ -1,0 +1,7 @@
+{
+  "payload": "{\"data\": {\"explainer_header\": \"What does the election mean for Brexit and what does Brexit mean for the election?\", \"explainer_text\": \"It is unlikely that the result will affect Brexit, with both Tories and Labour saying they will enact the referendum result, though if Labour wins we might be more likely to see a \\u201csoft Brexit\\u201d as opposed to a hard one. A number of MPs campaigned differently from the way their constituency voted, for example the Labour MP for Vauxhall, Kate Hoey, who backed Brexit, while only 22% of her constituents voted to leave. While nationally Labour campaigned for remain, many traditionally Labour constituencies voted to leave. How this plays out in the general election remains to be seen.\"}, \"mandatory_config\": {}}",
+  "schema_url": "https://s3.ap-south-1.amazonaws.com/protos.dev/Schemas/toExplain/0.0.1/schema.json",
+  "api_slug": "24",
+  "source": "form",
+  "bucket": "protos.dev"
+}

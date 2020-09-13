@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title><%= page.headline %></title>
+        <link href="https://fonts.googleapis.com/css?family=Bitter:400,700|Cabin:400,400i,500,700" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://cdn.protograph.pykih.com/lib/proto-app-lib.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.protograph.pykih.com/lib/proto-app-style.min.css">
+        <link rel="stylesheet" type="text/css" href="<%= AWS_S3_ENDPOINT %>/<%= template_page_s3 %>/proto-app-grid.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <script src="https://cdn.protograph.pykih.com/lib/protoGraph.min.js"></script>
+        <% if (site.favicon_url) { %>
+            <link rel="icon" type="image/png" href="<%= site['favicon_url'] %>" />
+        <% } %>
+        <% if (page.meta_keywords) { %>
+            <meta name="keywords" content="<%= page.meta_keywords %>" />
+        <% } %>
+        <% if (page.meta_description) { %>
+            <meta name="description" content="<%= page.meta_description %>" />
+        <% } %>
+    </head>
+
+    <body>
+        <div class="proto-grid-container data-page">
+
+            <div class="client-brand-cover small-cover" id="account_header">
+                <div class="client-logo"></div>
+            </div>
+            <div class="proto-col col-16 proto-verticals-navbar">
+                <div class="proto-vertical-name" id="homepage_nav">
+                    #JALJAGRAN &nbsp;
+                    <i class="chevron down icon"></i>
+                </div>
+                <div class="page-navigation-options" id="vertical_nav"></div>
+                <div class="pnav-options single-pnav-option" id="homepage_nav_list"></div>
+                <div class="social right-float-div">
+                    <div class="single-link facebook">
+                        <a href="<%= site['facebook_url'] ? site['facebook_url'] : '#' %>" target="_blank"><img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/article-share-facebook.png"></a>
+                    </div>
+                    <div class="single-link twitter">
+                        <a href="<%= site['twitter_url'] ? site['facebook_url'] : '#' %>" target="_blank"><img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/article-share-twitter.png"></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="proto-col col-16 navbar">
+                <a href="./index.html">
+                    <div class="branding">#<strong>जलजागरण</strong></div>
+                </a>
+                <div class="nav-links">
+                    <div class="single-link stories"><a href="./index.html">ख़बरें</a></div>
+                    <div class="single-link active-page data"><a href="./data.html">आँकड़े</a></div>
+                    <div class="single-link insights"><a href="./findings.html">पड़ताल</a></div>
+                    <div class="single-link about"><a href="./about.html">परिचय</a></div>
+                </div>
+                <div class="social right-float-div">
+                    <div class="single-link facebook">
+                        <a href="https://www.facebook.com/dainikjagran/" target="_blank"><img src="img/fb-white.png"></a>
+                    </div>
+                    <div class="single-link twitter">
+                        <a href="https://twitter.com/jagrannews/" target="_blank"><img src="img/tw-white.png"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mobile-navigation">
+                <div class="mobile-navbar">
+                    <a href="./index.html">
+                        <div class="branding">#<strong>जलजागरण</strong></div>
+                    </a>
+                    <div class="right-float-div">
+                        <div class="hamburger-icon"><img src="img/hamburger-icon.png"></div>
+                    </div>
+                </div>
+
+                <div class="mobile-navigations-screen">
+                    <div class="right-float-div">
+                        <div class="close-icon"><i class="remove icon"></i></div>
+                    </div>
+                    <div class="nav-links">
+                        <div class="single-link stories"><a href="./index.html">ख़बरें</a></div>
+                        <div class="single-link data active-page"><a href="#">आँकड़े</a></div>
+                        <div class="single-link insights"><a href="./findings.html">पड़ताल</a></div>
+                        <div class="single-link about"><a href="./about.html">परिचय</a></div>
+                    </div>
+                    <div class="social bottom-pull-div">
+                        <div class="single-link facebook">
+                            <a href="https://www.facebook.com/dainikjagran/" target="_blank"><img src="img/fb-black.png"></a>
+                        </div>
+                        <div class="single-link twitter">
+                            <a href="https://twitter.com/jagrannews/" target="_blank"><img src="img/tw-black.png"></a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="proto-col col-16">
+                <div class="fixed-cover-block fixed-cover-block-small">
+                    <div class="page-title bottom-pull-div"><%= page.headline %></div>
+                </div>
+                <div class="clearfix"></div>
+                <div id="card-list-div"></div>
+            </div>
+            <div class="protograph-app-filter-icon" id="protograph_filter_icon">&#9776;</div>
+            <div class="protograph-app-filter-icon protograph-app-filter-close-button" id="protograph_filter_close_icon"><i class="remove icon"></i></div>
+        </div>
+        <script>
+            window.ProtoGraph = window.ProtoGraph || {};
+            ProtoGraph.streams = <%- JSON.stringify(streams_mapping) %>;
+            ProtoGraph.colors = <%- JSON.stringify(site) %>;
+            ProtoGraph.vertical_header_json_url = "<%- vertical_header_json_url %>";
+            ProtoGraph.homepage_header_json_url = "<%- homepage_header_json_url %>";
+            ProtoGraph.account_header_json_url = "<%- account_header_json_url %>";
+        </script>
+        <script type="text/javascript" src="https://cdn.protograph.pykih.com/lib/proto-app-lib.min.js"></script>
+        <script src="https://cdn.protograph.pykih.com/lib/protoGraph.min.js"></script>
+        <script type="text/javascript" src="<%= AWS_S3_ENDPOINT %>/<%= template_page_s3 %>/proto-app-grid.min.js"></script>
+    </body>
+
+</html>
